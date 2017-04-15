@@ -1,0 +1,173 @@
+// check to see that file is linked to html file
+console.log("hey girl hey")
+// GLOBAL VARIABLES
+//======================================================================
+// variable representing the div with the id submit which the user clicks
+//why is the array being used for the first four variables?
+var submit = $("#submit")[0];
+console.log(submit)
+// this is the div that the user inputs tex
+var search = $("#search")[0];
+console.log(search)
+
+// variable representing the div which the randomItems are displayed
+var buttons = $("#buttons")[0];
+console.log(buttons)
+// variable reprsenting the gifs pulled from the api
+var results = $("#results")[0];
+console.log(results)
+// replaced by new value to be listed on the listOfRandomItems array
+var randomItem = '';
+// varialbe that is an array of random items
+var listOfRandomItems = ["barcelona", "ibiza", "lisbon", "amsterdam", "prague", "istanbul", "budapest", "brussels", "cartagena", "aruba", "puerto rico"];
+//custom api key to be added into the complete API url
+var apiKey = "&api_key=dc6zaTOxFJmzC"
+//compete api url
+var endpoint = "http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC";
+// starting of the api url
+var url = "http://api.giphy.com/v1/gifs/search?q="
+//why are we console.log ing this?
+console.log(url + listOfRandomItems[4] + apiKey)
+
+
+// FUNTIONS (Reusalbe blocks of code that I will call upon when needed)
+//======================================================================
+
+
+// pulled from giphy example, this will append the buttons to the html
+function renderButtons() {
+
+    buttons.empty();
+
+    for (var i = 0; i < listOfRandomItems.length; i++) {
+
+        var a = $('<button>')
+        a.addClass('gif'); // Added a class
+        a.text(listOfRandomItems[i]); // Provided the initial button text
+        buttons.append(a); // Added the button to the HTML
+
+        console.log(listOfRandomItems[i]);
+    }
+}
+
+
+
+
+
+
+
+function pullUserInput(query) {
+    query = query.replace(/ /g, "+")
+    var endpoint = url + query + apiKey
+    return endpoint;
+}
+
+console.log(pullUserInput("hey"))
+
+
+
+
+
+// MAIN PROCESS
+//======================================================================
+
+$(search).keypress(function(e) {
+    var key = e.which;
+    if (key == 13) // the enter key code
+    {
+        var userInput = pullUserInput($('#search').val())
+        console.log("enter was pressed")
+        console.log(this)
+        // alert("search.  " + search.val(" ") +  " success");
+        $('#search').val();
+        console.log(pullUserInput($('#search').val()))
+//calling the api using ajax to pull gifs, specifially 10 line 92
+        $.ajax({
+            url: userInput,
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+                console.log(res);
+                console.log(res.data)
+                for (i = 0; i < 10; i++) {
+                    console.log(res.data[i].images.original.url)
+// copy and pasted from line 94 to 120- how would i have googled this?
+// it looks like this begins the appending of the results
+                    var div = $("<div>");
+
+                    div.attr("class", "imageHolder");
+
+                    div.attr("id", res.data[i].id);
+
+                    var picture = $("<img>");
+
+                    var gif = $("<img>");
+
+                    picture.attr("class", "img-responsive");
+
+                    gif.attr("class", "img-responsive");
+
+                    picture.attr("src", res.data[i].images.original_still.url);
+
+                    gif.attr("src", res.data[i].images.original.url);
+
+                    gif.css("display", "none");
+
+                    div.append(picture);
+
+                    div.append(gif);
+
+                    results.append(div);
+
+
+                }
+            }
+        });
+
+  // got this code from online- differs from giffy code is this the vanilla js way
+        // var results = document.createElement("DIV");
+        // newdiv.appendChild(document.createTextNode("some text"));
+        // document.body.appendChild(newdiv);
+
+        // alert(search.val()); // get value
+
+    }
+});
+
+renderButtons();
+
+submit.on('click', function GifButtons(){
+	item = $("#search").val().trim();
+	listOfRandomItems.push(item);
+	console.log(listOfRandomItems);
+	renderButtons();
+})
+
+
+
+$("#results").on("click", ".imageHolder", function() {
+
+	console.log("clickity click");
+
+	$(this).find(".img-responsive").toggle();
+
+});
+
+
+
+
+
+
+
+
+
+// pull the user input
+// push the string to display on the html
+// push the string to the giphy API to return 10 images
+
+// get these folders connected to the github repo
+// dynically create buttons that also show GIFS
+// append GIFs to DOM
+// check out guacs code
+
+//Testing/Debugging
