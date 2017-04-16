@@ -3,6 +3,13 @@ console.log("hey girl hey")
 // GLOBAL VARIABLES
 //======================================================================
 // variable representing the div with the id submit which the user clicks
+
+// var newdiv = document.createElement("BUTTON");
+// newdiv.innerHTML = "I am a Button";
+// newdiv.setAttribute("class", "someClass" );
+// // newdiv.appendChild(document.createTextNode("some text"));
+// document.body.appendChild(newdiv);
+
 //why is the array being used for the first four variables?
 var submit = $("#submit")[0];
 console.log(submit)
@@ -33,27 +40,21 @@ console.log(url + listOfRandomItems[4] + apiKey)
 // FUNTIONS (Reusalbe blocks of code that I will call upon when needed)
 //======================================================================
 
-
-// pulled from giphy example, this will append the buttons to the html
-function renderButtons() {
-
-    buttons.empty();
-
-    for (var i = 0; i < listOfRandomItems.length; i++) {
-
-        var a = $('<button>')
-        a.addClass('gif'); // Added a class
-        a.text(listOfRandomItems[i]); // Provided the initial button text
-        buttons.append(a); // Added the button to the HTML
-
-        console.log(listOfRandomItems[i]);
-    }
-}
-
-
-
-
-
+// // pulled from giphy example, this will append the buttons to the html
+// function renderButtons() {
+//
+//     buttons.empty();
+//
+//     for (var i = 0; i < listOfRandomItems.length; i++) {
+//
+//         var a = $('<button>')
+//         a.addClass('gif'); // Added a class
+//         a.text(listOfRandomItems[i]); // Provided the initial button text
+//         buttons.append(a); // Added the button to the HTML
+//
+//         console.log(listOfRandomItems[i]);
+//     }
+// }
 
 
 function pullUserInput(query) {
@@ -64,8 +65,34 @@ function pullUserInput(query) {
 
 console.log(pullUserInput("hey"))
 
+// function dynamicallyCreateButtons(array) {
+//   var item;
+//   for (item in array) {
+//     console.log(array[item])
+//     var button = document.createElement("BUTTON");
+//     button.innerHTML = array[item];
+//     button.setAttribute("class", "city" );
+//    buttons.setAttribute("data-city", array[item])
+//     // newdiv.appendChild(document.createTextNode("some text"));
+//     buttons.appendChild(button);
+//   }
+//
+// }
+// dynamicallyCreateButtons(listOfRandomItems);
 
+function dynamicallyCreateButtons(array) {
+  var i;
+  for (i in array) {
+    console.log(array[i])
+    var button = document.createElement("BUTTON");
+    button.innerHTML = array[i];
+    button.setAttribute("class", "city");
+    button.setAttribute("data-city", array[i]);
+    buttons.appendChild(button);
 
+  }
+}
+dynamicallyCreateButtons(listOfRandomItems)
 
 
 // MAIN PROCESS
@@ -132,25 +159,6 @@ $(search).keypress(function(e) {
         // alert(search.val()); // get value
 
     }
-});
-
-renderButtons();
-
-submit.on('click', function GifButtons(){
-	item = $("#search").val().trim();
-	listOfRandomItems.push(item);
-	console.log(listOfRandomItems);
-	renderButtons();
-})
-
-
-
-$("#results").on("click", ".imageHolder", function() {
-
-	console.log("clickity click");
-
-	$(this).find(".img-responsive").toggle();
-
 });
 
 
