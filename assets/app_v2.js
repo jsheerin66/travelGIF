@@ -24,9 +24,9 @@ console.log(buttons)
 var results = $("#results")[0];
 console.log(results)
 // replaced by new value to be listed on the listOfRandomItems array
-var randomItem = '';
+// var randomItem = '';
 // varialbe that is an array of random items
-var listOfRandomItems = ["barcelona", "ibiza", "lisbon", "amsterdam", "prague", "istanbul", "budapest", "brussels", "cartagena", "aruba", "puerto rico"];
+var listOfRandomItems = ["barcelona", "ibiza", "lisbon", "amsterdam", "prague", "istanbul", "budapest", "brussels", "cartagena", "aruba", "san juan"];
 //custom api key to be added into the complete API url
 var apiKey = "&api_key=dc6zaTOxFJmzC"
 //compete api url
@@ -79,7 +79,7 @@ console.log(pullUserInput("hey"))
 //
 // }
 // dynamicallyCreateButtons(listOfRandomItems);
-
+// created a function called dynamicallyCreateButtons set the parameter to array
 function dynamicallyCreateButtons(array) {
   var i;
   for (i in array) {
@@ -92,11 +92,41 @@ function dynamicallyCreateButtons(array) {
 
   }
 }
+// calling the function dynamicallyCreateButtons to run and add to array listOfRandomItems
 dynamicallyCreateButtons(listOfRandomItems)
 
 
 // MAIN PROCESS
 //======================================================================
+
+$(search).keypress(function(e) {
+  var key = e.which;
+  if (key == 13){
+// grabbing the userinput using jquery
+    var userInput = search.value;
+    console.log(userInput)
+    listOfRandomItems.push(userInput);
+    search.value= "";
+    console.log(listOfRandomItems);
+// calling the id buttons and emptying its contents then transfering- need to go over a little more
+    $(buttons).empty();
+    dynamicallyCreateButtons(listOfRandomItems);
+  }
+});
+
+// why doesnt this go to console.log anymore- what is this doing again? whats this purpose? did it not work bc line 131
+$(buttons).on("click", ".city", function() {
+
+	console.log("clickity click");
+console.log(this)
+
+console.log(this.getAttribute("data-city"))
+
+
+
+});
+
+
 
 $(search).keypress(function(e) {
     var key = e.which;
