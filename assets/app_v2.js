@@ -21,7 +21,7 @@ console.log(search)
 var buttons = $("#buttons")[0];
 console.log(buttons)
 // variable reprsenting the gifs pulled from the api
-var results = $("#results")[0];
+var imgResults = $("#results")[0];
 console.log(results)
 // replaced by new value to be listed on the listOfRandomItems array
 // var randomItem = '';
@@ -147,9 +147,12 @@ $(buttons).on("click", ".city", function() {
             console.log(results.data)
             for (i = 0; i < 10; i++) {
               console.log(results.data[i].embed_url)
-              var img = document.createElement('');
+              var img = document.createElement("IMG");
+              img.setAttribute("src", results.data[i].images.fixed_height.url);
+              imgResults.appendChild(img)
 
-                      results.appendChild(img);
+              imgResults.insertBefore(img, imgResults.firstChild);
+
             }
 
         }
@@ -182,40 +185,8 @@ $(buttons).on("click", ".city", function() {
 //                 console.log(results.data)
 //                 for (i = 0; i < 10; i++) {
 //                     console.log(results.data[i].images.original.url)
-// // copy and pasted from line 94 to 120- how would i have googled this?
-// // it looks like this begins the appending of the results
-//                     var div = $("<div>");
-//
-//                     div.attr("class", "imageHolder");
-//
-//                     div.attr("id", results.data[i].id);
-//
-//                     var picture = $("<img>");
-//
-//                     var gif = $("<img>");
-//
-//                     picture.attr("class", "img-responsive");
-//
-//                     gif.attr("class", "img-responsive");
-//
-//                     picture.attr("src", results.data[i].images.original_still.url);
-//
-//                     gif.attr("src", results.data[i].images.original.url);
-//
-//                     gif.css("display", "none");
-//
-//                     div.append(picture);
-//
-//                     div.append(gif);
-//
-//                     results.append(div);
-//
-//
-//                 }
-//             }
-//         });
-//
-//   // got this code from online- differs from giffy code is this the vanilla js way
+
+// got this code from online- differs from giffy code is this the vanilla js way
 //         // var results = document.createElement("DIV");
 //         // newdiv.appendChild(document.createTextNode("some text"));
 //         // document.body.appendChild(newdiv);
@@ -224,13 +195,6 @@ $(buttons).on("click", ".city", function() {
 //
 //     }
 // });
-
-
-
-
-
-
-
 
 
 // pull the user input
